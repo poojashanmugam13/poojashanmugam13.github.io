@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌸 My Self Love Diary 🍃</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Lucida Calligraphy', cursive;
+      background: linear-gradient(to right, #ffc0cb, #ffb6c1, #ffe4e1);
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+      position: relative;
+    }
+    header {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 2.5em;
+      animation: slideDown 1s ease;
+      text-shadow: 2px 2px #ff69b4;
+    }
+    .flashBox {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: white;
+      border-radius: 10px;
+      color: #ff1493;
+      font-size: 1em;
+      animation: flash 1s infinite alternate;
+    }
+    @keyframes flash {
+      from { background-color: white; color: #ff1493; }
+      to { background-color: #ff1493; color: white; }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .monthYear {
+      text-align: right;
+      font-weight: bold;
+      color: #ff1493;
+      font-size: 1.6em;
+    }
+    .section {
+      background: rgba(255,255,255,0.95);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 15px rgba(255,105,180,0.4);
+      animation: bgMove 10s linear infinite alternate;
+    }
+    @keyframes bgMove {
+      0% { background-color: rgba(255,255,255,0.95); }
+      50% { background-color: rgba(255,240,245,0.95); }
+      100% { background-color: rgba(255,250,250,0.95); }
+    }
+    .section h2 {
+      margin-top: 0;
+      color: #ff1493;
+      text-shadow: 1px 1px #ff69b4;
+    }
+    .weekdays, .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      margin-top: 10px;
+    }
+    .weekdays div {
+      font-weight: bold;
+      color: #ff69b4;
+      text-shadow: 1px 1px #f0f;
+    }
+    .day {
+      padding: 10px 0;
+      border-radius: 5px;
+      font-size: 1.1em;
+      color: #d63384;
+      background: linear-gradient(45deg, #ffb6c1, #ffe4e1);
+      margin: 2px;
+      position: relative;
+      cursor: pointer;
+    }
+    .today {
+      background: white !important;
+      color: #ff1493 !important;
+      font-weight: bold;
+    }
+    .day .markImportant {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      font-size: 1.2em;
+    }
+    textarea, input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-family: 'Lucida Calligraphy', cursive;
+      margin-top: 10px;
+      display: block;
+    }
+    button {
+      background: #ff69b4;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+      font-family: 'Lucida Calligraphy', cursive;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      color: #ff1493;
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    .quotes {
+      font-size: 1.2em;
+      color: #d63384;
+      line-height: 2em;
+      animation: slideQuotes 10s linear infinite;
+    }
+    @keyframes slideQuotes {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+      100% { transform: translateX(0); }
+    }
+    .quotePoint:nth-child(1) { margin-left: 1cm; }
+    .quotePoint:nth-child(2) { margin-left: 3cm; }
+    .quotePoint:nth-child(3) { margin-left: 6cm; }
+    .quotePoint:nth-child(4) { margin-left: 9cm; }
+
+    .heartRain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .heart {
+      position: absolute;
+      animation: fall 5s linear infinite;
+      font-size: 20px;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="heartRain" id="heartRain"></div>
+
+  <div class="container">
+    <header>
+      <h1>🌸 My Self Love Diary 🍃</h1>
+      <div class="flashBox">💡"Fall in Love With Your Failures!!🤍</div>
+    </header>
+
+    <!-- Calendar -->
+    <div class="section">
+      <h2 style="text-align:left;">📅 Calendar</h2>
+      <div class="monthYear" id="monthYear"></div>
+      <div class="weekdays">
+        <div>Sun ☀️</div><div>Mon 🌙</div><div>Tue ⭐</div><div>Wed ✨</div><div>Thu 💫</div><div>Fri 🌟</div><div>Sat 👼</div>
+      </div>
+      <div class="days" id="days"></div>
+    </div>
+
+    <!-- To-Do List -->
+    <div class="section">
+      <h2>📝 To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Add new task...">
+      <button onclick="addTask()">Add</button>
+      <ul id="taskList"></ul>
+    </div>
+
+    <!-- Diary Notes -->
+    <div class="section">
+      <h2>📖 Diary Notes - <span id="diaryDate"></span></h2>
+      <textarea id="diaryNote" placeholder="Write your thoughts here..."></textarea>
+      <button onclick="saveDiary()">💾 Save</button>
+      <div id="saveMessage" style="color:green;margin-top:10px;"></div>
+    </div>
+
+    <!-- Daily Positive Thoughts -->
+    <div class="section">
+      <h2>🌸 Daily Positive Thoughts</h2>
+      <div class="quotes">
+        <div class="quotePoint">🌻 I am enough just as I am.</div>
+        <div class="quotePoint">🦋 I choose myself today.</div>
+        <div class="quotePoint">🌙 Self love is my superpower.</div>
+        <div class="quotePoint">💖 I am growing and glowing.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Calendar Script
+    const monthYear = document.getElementById('monthYear');
+    const days = document.getElementById('days');
+    let date = new Date();
+
+    function renderCalendar() {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const monthName = date.toLocaleString('default', { month: 'long' });
+
+      let displayMonth = monthName;
+      if(monthName === "July"){
+        displayMonth = "July 🌙🤍";
+      }
+
+      monthYear.innerHTML = `🌸 ${displayMonth} ${year}`;
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const lastDate = new Date(year, month + 1, 0).getDate();
+      const prevLastDate = new Date(year, month, 0).getDate();
+
+      let daysHtml = "";
+      for(let i = firstDay; i > 0; i--){
+        daysHtml += `<div class="day other">${prevLastDate - i + 1}</div>`;
+      }
+      const todayDate = new Date().getDate();
+      const thisMonth = new Date().getMonth();
+      const thisYear = new Date().getFullYear();
+
+      for(let i = 1; i <= lastDate; i++){
+        let className = "day";
+        if(i === todayDate && month === thisMonth && year === thisYear){
+          className += " today";
+        }
+        daysHtml += `<div class="${className}" ondblclick="markImportant(this)">${i}<span class="markImportant"></span></div>`;
+      }
+      const nextDays = 42 - (firstDay + lastDate);
+      for(let i = 1; i <= nextDays; i++){
+        daysHtml += `<div class="day other">${i}</div>`;
+      }
+      days.innerHTML = daysHtml;
+    }
+    renderCalendar();
+
+    function markImportant(dayDiv) {
+      const span = dayDiv.querySelector(".markImportant");
+      if(span.innerText === "") {
+        span.innerText = "❤️";
+      } else {
+        span.innerText = "";
+      }
+    }
+
+    // To-Do List Script
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const task = input.value.trim();
+      if(task) {
+        const li = document.createElement('li');
+        li.innerHTML = `${task} <button onclick="completeTask(this)">✔️</button>`;
+        document.getElementById('taskList').appendChild(li);
+        input.value = '';
+      }
+    }
+    function completeTask(btn) {
+      btn.parentElement.classList.toggle('completed');
+    }
+
+    // Diary Notes Script with daily save feature
+    const diaryDate = document.getElementById('diaryDate');
+    const diaryNote = document.getElementById('diaryNote');
+    const saveMessage = document.getElementById('saveMessage');
+
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'});
+    diaryDate.innerText = dateStr;
+
+    const savedNote = localStorage.getItem('diary-' + dateStr);
+    if(savedNote) diaryNote.value = savedNote;
+
+    function saveDiary() {
+      localStorage.setItem('diary-' + dateStr, diaryNote.value);
+      saveMessage.innerText = "✅ Saved!";
+      setTimeout(() => saveMessage.innerText = "", 2000);
+    }
+
+    // Heart Rain Script
+    const colors = ["❤️","🧡","💛","💚","💙","💜"];
+    function createHeart(){
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = Math.random()*20+10+'px';
+      heart.innerText = colors[Math.floor(Math.random()*colors.length)];
+      document.getElementById('heartRain').appendChild(heart);
+      setTimeout(()=>heart.remove(),5000);
+    }
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
